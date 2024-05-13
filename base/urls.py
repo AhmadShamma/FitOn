@@ -1,19 +1,17 @@
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter,SimpleRouter
+from rest_framework.routers import DefaultRouter
 from rest_framework_nested import routers
 
 from . import views
+from core.views import *
 #####################################################
 
 router = DefaultRouter()
 router.register('muscles',views.MusclesList,basename='muslces')
-router.register('trainee',views.TraineeCreateView,basename='trainee')
-router.register('profile',views.TraineeUpdateView,basename='create-trainee')
 router.register('trainingfocus',views.TrainingFocusList,basename='trainingfocus')
 router.register('advice',views.MainAdviceList,basename='advice')
 router.register('plan',views.PlanList,basename='plan')
-
-
+router.register('exercise',views.ExerciseList,basename='exercise')
 
 
 trainingfocus_router = DefaultRouter()

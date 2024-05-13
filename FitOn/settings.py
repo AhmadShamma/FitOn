@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'djoser',
     'debug_toolbar',
-    'drf_yasg',
 ]
 
 
@@ -85,17 +84,15 @@ WSGI_APPLICATION = 'FitOn.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'FitOn',
-        'USER': 'root',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'fiton',
+        'USER': 'postgres',
         'PASSWORD': 'abogasan456%',
-        'HOST': 'localhost',  # You can use another host if your database is on a remote server.
-        'PORT': '3306',       # Default MySQL port.
-        # 'OPTIONS': {
-        #     "init_command": "SET foreign_key_checks = 0;",
-        # },
+        'HOST': 'localhost',
+        'PORT': '',    
     }
 }
+
 
 
 # Password validation
@@ -115,46 +112,33 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
 USE_TZ = True
-
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
 STATIC_URL = 'static/'
-
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
 
 AUTH_USER_MODEL = 'core.User'
 
 INTERNAL_IPS = [
-    # ...
     "127.0.0.1",
-    # ...
 ]
 
 REST_FRAMEWORK = {
+    'DATETIME_FORMAT': "%d/%m/%Y %H:%M:%S",
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
+
 }
 
 SIMPLE_JWT = {
@@ -166,4 +150,6 @@ DJOSER = {
     'SERIALIZERS' : {
         'user_create':'core.serializers.UserCreateSerializer'
     }
+
 }
+

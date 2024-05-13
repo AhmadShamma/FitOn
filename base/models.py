@@ -1,6 +1,12 @@
 from django.db import models
+from django.conf import settings
+from rest_framework import serializers
 from django.core.validators import URLValidator
-from FitOn.settings import AUTH_USER_MODEL
+from django.db.models import Q,F,CheckConstraint
+
+
+
+
 
 ######################################################################
 
@@ -78,27 +84,8 @@ class Plan_Day_Exercise(models.Model):
 
     class Meta:
         unique_together = ('plan_day','exercise')
-######################################################################
-
-class Trainee(models.Model):
-    birth_date = models.DateField(blank=True,null=True)
-
-    phone_number = models.CharField(max_length=15,blank=True,null=True)
-
-    height = models.DecimalField(max_digits=5, decimal_places=2)
-    weight = models.DecimalField(max_digits=5, decimal_places=2)
-    health_conditions = models.TextField(blank=True)
-
-    fitness_goals = models.TextField(blank=True)
-
-    sessions_completed = models.PositiveIntegerField(default=0,blank=True)
-    progress_notes = models.TextField(blank=True)
-
-    user = models.OneToOneField(
-        AUTH_USER_MODEL,on_delete=models.CASCADE
-    )
-
-##################################################################
+        
+###################################################################    
 
 class MainAdvice(models.Model):
     title = models.CharField(max_length=255)

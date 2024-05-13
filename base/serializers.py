@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Muscle,TrainingFocus,Trainee,Plan,Day,Exercise,Plan_Day,Plan_Day_Exercise
-from . import models
+from .models import *
 ###############################################################
 
 class MuscleSerializer(serializers.ModelSerializer):
@@ -55,13 +54,7 @@ class SimpleTrainingFocusSerializer(serializers.ModelSerializer):
 
     def get_name(self,obj):
         return obj.name
-###############################################################
 
-class TraineeSerializer(serializers.ModelSerializer):
-    user_id = serializers.IntegerField()
-    class Meta:
-        fields = ['id','age','phone_number','height','weight','health_conditions','fitness_goals','sessions_completed','progress_notes','user_id']
-        model = Trainee
 
 ###############################################################
 
@@ -77,7 +70,7 @@ class PlanDaySerializer(serializers.ModelSerializer):
     day_name = serializers.SerializerMethodField()
     exercises = serializers.SerializerMethodField()
     class Meta:
-        fields = ['id','day_name','exercises']
+        fields = ['day_name','exercises']
         model = Plan_Day
 
     def get_day_name(self,obj):
@@ -90,7 +83,10 @@ class PlanDaySerializer(serializers.ModelSerializer):
                 'name':exercise.exercise.name,
                 'description' : exercise.exercise.description,
                 'sets' : exercise.exercise.sets,
-                'reps' : exercise.exercise.reps
+                'reps' : exercise.exercise.reps,
+                'image': exercise.exercise.image.url if exercise.exercise.image else None,
+                'video': exercise.exercise.video.url if exercise.exercise.video else None
+                
             }
             for exercise in obj.plan_day_rel.all()
         ]
@@ -100,9 +96,8 @@ class PlanDaySerializer(serializers.ModelSerializer):
 class PlanSerializer(serializers.ModelSerializer):
     training_focus = serializers.SerializerMethodField()
     plan_detail = PlanDaySerializer(source='plan_rel',many=True)
-    image = serializers.ImageField()
     class Meta:
-        fields = ['id','advice','weeks','training_focus','plan_detail','image']
+        fields = ['id','advice','weeks','training_focus','image','plan_detail']
         model = Plan
 
     def get_training_focus(self,obj):
@@ -112,7 +107,7 @@ class PlanSerializer(serializers.ModelSerializer):
 class SubAdviceSerializer(serializers.ModelSerializer):
     class Meta:
         fields = ['id','title','description']
-        model = models.SubAdvice
+        model = SubAdvice
 
 ###############################################################
 
@@ -120,7 +115,30 @@ class MainAdviceSerializer(serializers.ModelSerializer):
     sub_advices = SubAdviceSerializer(many=True)
     image = serializers.ImageField()
     class Meta:
-        fields = ['id','title','description','sub_advices','image']
-        model = models.MainAdvice
+        fields = ['id','title','description','image','sub_advices']
+        model = MainAdvice
 
 ###############################################################
+
+
+class CreateUpdatePlanSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['id','advice','weeks','training_focus','image']
+        model = Plan
+
+###############################################################
+
+class CreateUpdateMainAdviceSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['id','title','description','image']
+        model = MainAdvice
+
+###############################################################
+
+class CreateUpdateTrainingFocusSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = ['id','name','description','level','image']
+        model = TrainingFocus
+
+###############################################################
+
