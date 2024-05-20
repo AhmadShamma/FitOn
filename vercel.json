@@ -1,0 +1,33 @@
+{
+    "version": 2,
+    "builds": [
+        {
+          "src": "FitOn/wsgi.py",
+          "use": "@vercel/python",
+          "config": {
+            "runtime": "python3.11"
+          }
+        },
+        {
+          "src": "build.sh",
+          "use": "@vercel/static-build",
+          "config": {
+            "distDir": "staticfiles_build"
+          }
+        }
+      ],
+      "routes": [
+        {
+            "src": "/media/(.*)",
+            "dest": "/media/$1",
+            "headers": {
+              "cache-control": "public, max-age=0, must-revalidate"
+            }
+          },
+        {
+          "src": "/(.*)",
+          "dest": "FitOn/wsgi.py"
+        }
+      ]
+  }
+  
