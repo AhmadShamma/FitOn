@@ -97,7 +97,7 @@ WSGI_APPLICATION = 'FitOn.wsgi.application'
 
 DATABASES = {
     'default': dj_database_url.config(
-        default='postgresql://postgres:abogasan456%@dpg-cp66o2mn7f5s73a89g60-a/fiton'
+        default='postgresql://ahmad_sh_fit_on:OFgFcxOZtKm2zT8i6iQg7DbYpYeeddRR@dpg-cp66o2mn7f5s73a89g60-a/fiton_sql_postgres'
     )
 }
 
