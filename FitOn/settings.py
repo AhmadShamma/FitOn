@@ -96,11 +96,15 @@ WSGI_APPLICATION = 'FitOn.wsgi.application'
 # }
 
 DATABASES = {
-    'default': dj_database_url.config(
-        default='postgresql://ahmad_sh_fit_on:OFgFcxOZtKm2zT8i6iQg7DbYpYeeddRR@dpg-cp66o2mn7f5s73a89g60-a/fiton_sql_postgres'
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'FitOn$FitOnDb',
+        'USER': 'FitOn',
+        'PASSWORD': 'abogasan456%',
+        'HOST': 'FitOn.mysql.pythonanywhere-services.com',  # You can use another host if your database is on a remote server.
+        'PORT': '3306',    
+    }
 }
-
 
 
 # Password validation
