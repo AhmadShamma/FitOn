@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
+import dj_database_url
 from datetime import timedelta
 from pathlib import Path
 
@@ -48,6 +49,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -82,15 +84,21 @@ WSGI_APPLICATION = 'FitOn.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'fiton',
+#         'USER': 'postgres',
+#         'PASSWORD': 'abogasan456%',
+#         'HOST': 'dpg-cp66o2mn7f5s73a89g60-a',
+#         'PORT': '',    
+#     }
+# }
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'fiton',
-        'USER': 'postgres',
-        'PASSWORD': 'abogasan456%',
-        'HOST': 'localhost',
-        'PORT': '',    
-    }
+    'default': dj_database_url.config(
+        default='postgresql://postgres:abogasan456%@dpg-cp66o2mn7f5s73a89g60-a/fiton'
+    )
 }
 
 
